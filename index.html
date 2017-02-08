@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <title>Calypso Chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="jquery.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <style>
+      body{
+        overflow-y: hidden;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body ng-controller="main" ng-cloak>
+    <!-- your name -->
+    <div class="ui one column centered aligned grid" style="margin:0 auto;" ng-show="!logged">
+      <form class="ui form">
+        <div class="field">
+          <h2 class="ui center aligned icon header">
+            <i class="users icon"></i>
+          </h2>
+        </div>
+        <div class="field">
+          <label>Your Name</label>
+          <input type="text" ng-model="yourname" placeholder="chai holway" />
+        </div>
+        <button class="fluid ui orange button" ng-click="login(yourname)">Submit</button>
+        <div class="ui active inverted dimmer" ng-show="load">
+          <div class="ui text loader">Loading</div>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui grid container" ng-show="logged">
+      <div class="sixteen wide column center aligned" style="margin:0px auto;">
+        <h3 class="ui header">
+          Party
+          <!-- <a class="ui green circular label">{{ online }}</a> -->
+        </h3>
+      </div>
+      <div class="sixteen wide column" id="div1" style="height:450px;overflow-y:auto;">
+        <div id="chat" class="ui celled list striped "></div>
+      </div>
+      <div class="sixteen wide column bottom">
+        <div class="six wide row">
+          <div class="ui form" >
+            <div class="field">
+              <label>Message</label>
+              <div class="ui small icon input">
+                <input type="text" placeholder="message ..." ng-model="txt" ng-enter="send(txt)" autofocus ng-disabled="block"/>
+                <i class="send icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sixteen wide column center aligned">
+        <a>CALYPSO SYSTEM &copy; 2017 CREATE BY K1R1N</a>
+      <!-- All of the Node.js APIs are available in this renderer process.
+      <We are using Node.js <script>document.write(process.versions.node)</script>,
+      Chromium <script>document.write(process.versions.chrome)</script>,
+      and Electron <script>document.write(process.versions.electron)</script>. -->
+      </div>
+    </div>
+
+
+
+  </body>
+
+  <script>
+    var socket = io('http://h-me.tv:1150');
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
